@@ -1,13 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const { Board } = require('../models')
+const { User } = require('../models')
+
 
 router.get('/create', async (req, res, next) => {
 	try {
-		const result = await Board.create({
-			title: '아버지를 아버지라...',
-			writer: '홍길동',
-			content: '아버지를 아버지라...형을 형이라...'
+		const result = await User.create({
+			userid: 'booldook',
+			userpw: '0000',
+			username: '임덕규'
 		})
 		res.json(result);
 	}
@@ -21,11 +22,10 @@ router.get(['/list', '/list/:page'], async (req, res, next) => {
 		const limit = 3
 		const page = req.params.page || 1
 		const offset = (page - 1) * limit;
-		const result = await Board.findAll({
-			order: [['id', 'asc'], ['title', 'asc']],
+		const result = await User.findAll({
+			order: [['id', 'desc']],
 			limit,
 			offset,
-			// where: { 'id': 3 },
 		})
 		res.json(result)
 	}
